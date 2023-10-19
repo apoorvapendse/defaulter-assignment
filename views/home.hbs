@@ -1,0 +1,43 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" class="text-center">id</th>
+      <th scope="col" class="text-center">Name</th>
+      <th scope="col" class="text-center">PRN</th>
+      <th scope="col" class="text-center">CGPA</th>
+      <th scope="col" class="text-center">SGPA</th>
+      <th scope="col" class="text-center">Overall Attendance</th>
+      <th scope="col" class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each students}}
+      <tr>
+        <th scope="row" class="text-center">{{id}}</th>
+        <td class="text-center">{{name}}</td>
+        <td class="text-center">{{prn}}</td>
+        <td class="text-center">{{cgpa}}</td>
+        <td class="text-center">{{sgpa}}</td>
+        <td class="text-center">{{overall_attendance}}</td>
+        <td class="text-center">
+          <button
+            class="btn"
+            data-toggle="modal"
+            data-target="#editStudentModal"
+          >
+            <i class="bi bi-pencil"></i>
+            Edit
+          </button>
+          <button class="btn">
+
+            <i class="bi bi-trash"></i>
+          </button>
+          <span></span>
+
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<script src="scripts/script.js"></script>
