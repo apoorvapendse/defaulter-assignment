@@ -17,11 +17,11 @@
     />
   </head>
   <style>
-   
+
   </style>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark text-light">
-      <div class="container-fluid text-light" >
+      <div class="container-fluid text-light">
         <a class="navbar-brand text-light" href="#">Apoorva Defaulter Assignment</a>
         <button
           class="navbar-toggler"
@@ -37,20 +37,133 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+              <a
+                class="nav-link active text-light"
+                aria-current="page"
+                href="#"
+              >Home</a>
             </li>
-            
-            
-            </li>
-           
           </ul>
-       
+          <div class="ml-auto">
+            <button
+              type="button"
+              class="btn btn-light ml-4"
+              data-bs-toggle="modal"
+              data-bs-target="#addStudentModal"
+            >
+              Add Student
+            </button>
+          </div>
         </div>
       </div>
     </nav>
     <div class="container pt-5 text-dark">
+      {{{body}}}
+    </div>
 
-    {{{body}}}
+    <!-- Modal for adding a student -->
+    <div
+      class="modal fade"
+      id="addStudentModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addStudentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addStudentModalLabel">
+              Add Student
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Form for capturing student data -->
+            <form id="studentForm">
+              <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id"
+                  name="id"
+                  placeholder="Enter ID"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Enter Name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="prn" class="form-label">PRN</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="prn"
+                  name="prn"
+                  placeholder="Enter PRN"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="cgpa" class="form-label">CGPA</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cgpa"
+                  name="cgpa"
+                  placeholder="Enter CGPA"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="sgpa" class="form-label">SGPA</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sgpa"
+                  name="sgpa"
+                  placeholder="Enter SGPA"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="overall_attendance" class="form-label">
+                  Overall Attendance
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="overall_attendance"
+                  name="overall_attendance"
+                  placeholder="Enter Overall Attendance"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="saveStudent">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script
@@ -58,5 +171,40 @@
       integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
       crossorigin="anonymous"
     ></script>
+
+   <script>
+  // Handle the "Save" button click event
+  document.getElementById("saveStudent").addEventListener("click", async function () {
+    // Get form data
+    const formData = {
+      id: document.getElementById("id").value,
+      name: document.getElementById("name").value,
+      prn: document.getElementById("prn").value,
+      cgpa: document.getElementById("cgpa").value,
+      sgpa: document.getElementById("sgpa").value,
+      overall_attendance: document.getElementById("overall_attendance").value,
+    };
+
+    // Perform your desired action with the formData, e.g., send it to a server
+    console.log("Student Data:", formData);
+
+    // Send a POST request to the server
+   await fetch('/post/new-student', {
+      method: 'POST',
+      body: JSON.stringify(formData), // Convert the data to JSON format
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    
+      
+
+    // Close the modal
+    window.location.reload();
+  });
+</script>
+
+
   </body>
 </html>

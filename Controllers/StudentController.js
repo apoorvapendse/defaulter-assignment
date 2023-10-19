@@ -24,3 +24,22 @@ export const getStudents = async (req, res) => {
   const data = await pool.query("SELECT * FROM student");
   res.json(data[0]);
 };
+
+export const addNewStudent = async (req, res) => {
+  console.log(req.body);
+  try {
+    await pool.query(
+      `INSERT INTO student(name,prn,cgpa,sgpa,overall_attendance)VALUES("${req.body.name}","${req.body.prn}","${req.body.cgpa}","${req.body.sgpa}","${req.body.overall_attendance}")`
+    );
+  } catch (err) {
+    console.log(err);
+  }
+
+  res.redirect("/")
+};
+
+export const deleteStudent = async(req,res)=>{
+    console.log(req.body)
+    pool.query(`DELETE FROM student WHERE id = ${req.body.id}`)
+    res.send("deleted")
+}

@@ -20,17 +20,13 @@
         <td class="text-center">{{sgpa}}</td>
         <td class="text-center">{{overall_attendance}}</td>
         <td class="text-center">
-          <button
-            class="btn"
-            data-toggle="modal"
-            data-target="#editStudentModal"
-          >
-            <i class="bi bi-pencil"></i>
+          <button class="btn">
+            <i class="bi bi-pencil "></i>
             Edit
           </button>
           <button class="btn">
 
-            <i class="bi bi-trash"></i>
+            <i class="bi bi-trash deleteBtn" id="{{id}}"></i>
           </button>
           <span></span>
 
@@ -40,4 +36,30 @@
   </tbody>
 </table>
 
+
 <script src="scripts/script.js"></script>
+
+<script>
+    let delButtons = document.querySelectorAll('.deleteBtn');
+    console.log(delButtons)
+    delButtons.forEach((btn)=>{
+        btn.addEventListener("click",async()=>{
+            console.log("Clicked",btn.id)
+
+             const requestData = {
+                id: btn.id
+            };
+
+            await fetch('post/deleteStudent', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            }).then(()=>{
+                window.location.reload();
+            })
+
+        })
+    })
+</script>
