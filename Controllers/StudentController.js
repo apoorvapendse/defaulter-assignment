@@ -43,3 +43,23 @@ export const deleteStudent = async(req,res)=>{
     pool.query(`DELETE FROM student WHERE id = ${req.body.id}`)
     res.send("deleted")
 }
+export const getSingleStudentData = async(req,res)=>{
+    let id = req.params.id;
+    let data = await pool.query(`select * from student where id=${id}`)
+    let studentData = (data[0][0])
+    res.json(studentData)
+   
+}
+export const updateStudent = async(req,res)=>{
+    console.log(req.body);
+   await pool.query(
+    `
+    UPDATE student
+    SET name=?, prn=?, cgpa=?, sgpa=?, overall_attendance=?
+    WHERE id=?
+    `,
+    [req.body.name, req.body.prn, req.body.cgpa, req.body.sgpa, req.body.overall_attendance, req.body.id]
+  );
+    res.send("successfully updated")
+   
+}

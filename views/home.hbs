@@ -13,14 +13,14 @@
   <tbody>
     {{#each students}}
       <tr>
-        <th scope="row" class="text-center">{{id}}</th>
-        <td class="text-center">{{name}}</td>
-        <td class="text-center">{{prn}}</td>
-        <td class="text-center">{{cgpa}}</td>
-        <td class="text-center">{{sgpa}}</td>
-        <td class="text-center">{{overall_attendance}}</td>
+        <th scope="row" class="text-center" >{{id}}</th>
+        <td class="text-center" id="name{{id}}">{{name}}</td>
+        <td class="text-center" id="prn{{id}}">{{prn}}</td>
+        <td class="text-center" id="cgpa{{id}}">{{cgpa}}</td>
+        <td class="text-center" id="sgpa{{id}}">{{sgpa}}</td>
+        <td class="text-center" id="overall{{id}}">{{overall_attendance}}</td>
         <td class="text-center">
-          <button class="btn">
+          <button class="btn edit" id="edit_{{id}}">
             <i class="bi bi-pencil "></i>
             Edit
           </button>
@@ -36,6 +36,111 @@
   </tbody>
 </table>
 
+ <div
+      class="modal fade"
+      id="editStudentModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="editStudentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editStudentModalLabel">
+              Add Student
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Form for capturing student data -->
+            <form id="editForm">
+
+              <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id"
+                  name="id"
+                  placeholder="Enter Name"
+                  disabled
+                />
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Enter Name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="prn" class="form-label">PRN</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="prn"
+                  name="prn"
+                  placeholder="Enter PRN"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="cgpa" class="form-label">CGPA</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cgpa"
+                  name="cgpa"
+                  placeholder="Enter CGPA"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="sgpa" class="form-label">SGPA</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sgpa"
+                  name="sgpa"
+                  placeholder="Enter SGPA"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="overall_attendance" class="form-label">
+                  Overall Attendance
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="overall_attendance"
+                  name="overall_attendance"
+                  placeholder="Enter Overall Attendance"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="saveEditStudent">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <script src="scripts/script.js"></script>
 
@@ -62,4 +167,62 @@
 
         })
     })
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // Function to populate and show the modal
+  function showStudentModal(studentData) {
+    // Pre-populate the modal form fields with studentData
+    document.getElementById('id').value = studentData.id;
+    document.getElementById('name').value = studentData.name;
+    document.getElementById('prn').value = studentData.prn;
+    document.getElementById('cgpa').value = studentData.cgpa;
+    document.getElementById('sgpa').value = studentData.sgpa;
+    document.getElementById('overall_attendance').value = studentData.overall_attendance;
+
+    // Show the modal
+    $('#editStudentModal').modal('show');
+  }
+
+  // Event listener for "Edit" buttons
+  let editBtns = document.querySelectorAll('.edit');
+  editBtns.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.id.split("_")[1]; // Extract the student ID from the button ID
+      console.log(id)
+      const response = await fetch(`/get-single-student-data/${id}`); 
+
+      const studentData = await response.json();
+
+      // Show the modal with pre-populated data
+      showStudentModal(studentData);
+    });
+  });
+
+  // Event listener for the "Save" button in the modal
+  document.getElementById('saveEditStudent').addEventListener('click', async () => {
+    // Collect and send the updated data to the server for saving
+    const updatedData = {
+      id: document.getElementById('id').value,
+      name: document.getElementById('name').value,
+      prn: document.getElementById('prn').value,
+      cgpa: document.getElementById('cgpa').value,
+      sgpa: document.getElementById('sgpa').value,
+      overall_attendance: document.getElementById('overall_attendance').value,
+    };
+
+    await fetch('/update-student',{
+      method:"POST",
+       headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(updatedData),
+      
+    })
+    window.location.reload();
+
+    // After saving, close the modal
+    $('#editStudentModal').modal('hide');
+  });
 </script>
