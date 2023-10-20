@@ -92,7 +92,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="name"
+                  id="newname"
                   name="name"
                   placeholder="Enter Name"
                 />
@@ -102,7 +102,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="prn"
+                  id="newprn"
                   name="prn"
                   placeholder="Enter PRN"
                 />
@@ -112,7 +112,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="cgpa"
+                  id="newcgpa"
                   name="cgpa"
                   placeholder="Enter CGPA"
                 />
@@ -122,7 +122,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="sgpa"
+                  id="newsgpa"
                   name="sgpa"
                   placeholder="Enter SGPA"
                 />
@@ -134,7 +134,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="overall_attendance"
+                  id="newoverall_attendance"
                   name="overall_attendance"
                   placeholder="Enter Overall Attendance"
                 />
@@ -169,11 +169,11 @@
     // Get form data
     const formData = {
       id: document.getElementById("id").value,
-      name: document.getElementById("name").value,
-      prn: document.getElementById("prn").value,
-      cgpa: document.getElementById("cgpa").value,
-      sgpa: document.getElementById("sgpa").value,
-      overall_attendance: document.getElementById("overall_attendance").value,
+      name: document.getElementById("newname").value,
+      prn: document.getElementById("newprn").value,
+      cgpa: document.getElementById("newcgpa").value,
+      sgpa: document.getElementById("newsgpa").value,
+      overall_attendance: document.getElementById("newoverall_attendance").value,
     };
 
     // Perform your desired action with the formData, e.g., send it to a server
